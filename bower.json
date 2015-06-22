@@ -1,0 +1,13 @@
+{
+  "name": "wpic-squirrel-editor",
+  "version": "1.0-SNAPSHOT",
+  "main": "css/main.css",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt"
+  ],
+  "dependencies": {
+    "jquery": "2.1.4",
+    "bootstrap-less": "3.3.4"
+  }
+}
