@@ -10,4 +10,4 @@
 * All the stylesheets have to be writen with LESS
 * Follow wireframe for UI
 
-(Wireframe)[wireframe.webp]
+![Wireframe](wireframe.webp)
