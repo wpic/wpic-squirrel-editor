@@ -1,10 +1,95 @@
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
-    <link rel="stylesheet" type="text/css" href="css/editor.css" />
-    <script src="js/editor.js"></script>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+  <link rel="stylesheet" type="text/css" href="css/editor.css" />
+  <title>Editor</title>
 </head>
 <body>
-    <h1>Here is the test!</h1>
+  <nav class="header notify"><button data-action="create"><span class="glyphicon glyphicon-plus"></span> Create New</button><span class="status"></span></nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2 col-sm-2 sidebar">
+        <div class="sidecontrol">
+          <div class="close glyphicon glyphicon-triangle-left"></div>
+          <div class="open glyphicon"><img src="img/expand.png"></div>
+        </div>
+        <div class="sidecontent">
+          <div class="header">OPEN FILES</div>
+            <div class="filelist">
+              <ul class="row">
+                <li class="active clearfix">
+                  <div class="col-xs-8 name">
+                    <span data-action="delete" class="glyphicon glyphicon-remove-sign"></span>
+                    <span data-action="editname">editor.js</span>
+                    <div class="date">2015.06.30 16:51:20</div>
+                  </div>
+                  <div class="col-xs-4 icons">
+                    <button class="btn" data-action="revert"><span class="glyphicon glyphicon-import"></span>Revert</button>
+                    <button class="btn" data-action="commit"><span class="glyphicon glyphicon-random"></span>Commit</button>
+                  </div>
+                </li>
+                <li class="clearfix">
+                  <div class="col-xs-8 name">
+                    <span data-action="delete" class="glyphicon glyphicon-remove-sign"></span>
+                    <span data-action="editname">editor.js</span>
+                    <div class="date">2015.06.30 16:51:20</div>
+                  </div>
+                  <div class="col-xs-4 icons">
+                    <button class="btn" data-action="revert"><span class="glyphicon glyphicon-import"></span>Revert</button>
+                    <button class="btn" data-action="commit"><span class="glyphicon glyphicon-random"></span>Commit</button>
+                  </div>
+                </li>
+                <li class="clearfix">
+                  <div class="col-xs-8 name">
+                    <span data-action="delete" class="glyphicon glyphicon-remove-sign"></span>
+                    <span data-action="editname">editor.js</span>
+                    <div class="date">2015.06.30 16:51:20</div>
+                  </div>
+                  <div class="col-xs-4 icons">
+                    <button class="btn" data-action="revert"><span class="glyphicon glyphicon-import"></span>Revert</button>
+                    <button class="btn" data-action="commit"><span class="glyphicon glyphicon-random"></span>Commit</button>
+                  </div>
+                </li>
+                <li class="clearfix">
+                  <div class="col-xs-8 name">
+                    <span data-action="delete" class="glyphicon glyphicon-remove-sign"></span>
+                    <span data-action="editname">editor.js</span>
+                    <div class="date">2015.06.30 16:51:20</div>
+                  </div>
+                  <div class="col-xs-4 icons">
+                    <button class="btn" data-action="revert"><span class="glyphicon glyphicon-import"></span>Revert</button>
+                    <button class="btn" data-action="commit"><span class="glyphicon glyphicon-random"></span>Commit</button>
+                  </div>
+                </li>
+                <li class="clearfix">
+                  <div class="col-xs-8 name">
+                    <span data-action="delete" class="glyphicon glyphicon-remove-sign"></span>
+                    <span data-action="editname">editor.js</span>
+                    <div class="date">2015.06.30 16:51:20</div>
+                  </div>
+                  <div class="col-xs-4 icons">
+                    <button class="btn" data-action="revert"><span class="glyphicon glyphicon-import"></span>Revert</button>
+                    <button class="btn" data-action="commit"><span class="glyphicon glyphicon-random"></span>Commit</button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-10 col-sm-10 content">
+        <ol>
+          <li>code1</li>
+          <li>code1</li>
+          <li>code1</li>
+          <li>code1</li>
+          <li>code1</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <script src="js/zepto.min.js"></script>
+  <script src="js/jquery-2.1.4.min.js"></script>
+  <!-- // <script src="js/jquery.editable.min.js"></script> -->
+  <script src="js/editor.js"></script>
 </body>
 </html>
