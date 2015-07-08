@@ -1,4 +1,4 @@
-load('my-mock-server.js');
+load('jjunit.js');
 
 var SimpleDateFormat = Java.type("java.text.SimpleDateFormat");
 var Date = Java.type("java.util.Date");
@@ -49,6 +49,20 @@ var handlers = [
     },
     {
         method: 'PUT',
+        path: '/rest/scripts/commit/$name',
+        handler: function(param) {
+            for each (script in scripts) {
+                if (script.name == param.name) {
+                    script.content = script.temp;
+                    script.lastEdit = dateFormat.format(new Date());
+                    script.committed = true;
+                    return null;
+                }
+            }
+        }
+    },
+    {
+        method: 'PUT',
         path: '/rest/scripts/$name',
         accept: 'text/plain',
         handler: function(param, data) {
@@ -57,20 +71,6 @@ var handlers = [
                     script.temp = data;
                     script.lastEdit = dateFormat.format(new Date());
                     script.committed = false;
-                    return null;
-                }
-            }
-        }
-    },
-    {
-        method: 'PUT',
-        path: '/rest/scripts/commit/$name',
-        handler: function(param) {
-            for (script in scripts) {
-                if (script.name == param.name) {
-                    script.content = script.temp;
-                    script.lastEdit = dateFormat.format(new Date());
-                    script.committed = true;
                     return null;
                 }
             }
@@ -90,7 +90,7 @@ var handlers = [
     }
 ];
 
-var server = new MyMockServer('.', handlers);
-server.start();
+var jjunit = new JJUnit('.', handlers);
+jjunit.start();
 
 

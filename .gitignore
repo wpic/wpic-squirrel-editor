@@ -2,6 +2,6 @@
 !.gitignore
 target/
 *.iml
-*.cache
-*.jar
+*~
+jjunit*
 bower_components/
