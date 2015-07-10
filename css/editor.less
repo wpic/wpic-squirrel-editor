@@ -8,6 +8,10 @@
 @bgcolor:#002240;
 @fontcolor:#ccc;
 
+[data-is-editing='1']{
+	font-style:italic;font-size:110%;
+	&[data-action='editname']{color:#fc0 !important;}
+}
 *{box-sizing: border-box;outline:none}
 .clearfix {
   *zoom: 1;
@@ -25,7 +29,7 @@
 
 body {
 	font:12px "Microsoft YaHei",Verdana;
-	padding-top:40px;
+	// padding-top:40px;
 	background:@bgcolor;
 	color:@fontcolor;
   h1 {
@@ -43,6 +47,7 @@ nav.header{
 			border:1px solid #eee;color:#fff;
 		}
 	}
+	.error{color:#f00;}
 }
 
 .sidebar{
@@ -83,6 +88,7 @@ nav.header{
 				padding:0;text-indent:5px;
 				.glyphicon{margin-left: -10px;position:absolute;top:8px;color:#EA9793;border-radius:10px;}
 				[data-action='editname']{color:#333;text-decoration:none;text-indent:20px;padding-left:14px;}
+				&.editable{font-style:italic;}
 			}
 			.date{font-size:8px;color:#999;text-shadow:none;padding-top:4px;text-indent:20px;}
 			.icons{text-align:right;padding:0;}
@@ -102,4 +108,8 @@ nav.header{
 	}
 }
 
-.notify{position:fixed;width:100%;top:0;height:40px;border-bottom:1px solid #999;background-color:rgba(255,255,255,.1);z-index:100;}
+.content{
+	.code{min-height:600px;}
+}
+
+.notify{position:relative;width:100%;top:0;height:40px;border-bottom:1px solid #999;background-color:rgba(255,255,255,.1);z-index:100;}

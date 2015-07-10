@@ -38,13 +38,19 @@ var handlers = [
         path: '/rest/scripts/$name',
         accept: 'application/json',
         handler: function(param, data) {
-            scripts.push({
+            var script = {
                 name: param.name,
                 committed: false,
                 temp: data,
                 lastEdit: dateFormat.format(new Date())
-            });
-            return null;
+            };
+            for each (s in scripts) {
+                if (s.name == param.name) {
+                    throw "Script already exist: " + param.name;
+                }
+            }
+            scripts.push(script);
+            return script;
         }
     },
     {
@@ -56,7 +62,20 @@ var handlers = [
                     script.content = script.temp;
                     script.lastEdit = dateFormat.format(new Date());
                     script.committed = true;
-                    return null;
+                    return script;
+                }
+            }
+        }
+    },
+    {
+        method: 'PUT',
+        path: '/rest/scripts/rename/$from/$to',
+        handler: function(param) {
+            print('here1')
+            for each (script in scripts) {
+                if (script.name == param.from) {
+                    script.name = param.to;
+                    return script;
                 }
             }
         }
@@ -66,12 +85,13 @@ var handlers = [
         path: '/rest/scripts/$name',
         accept: 'text/plain',
         handler: function(param, data) {
+            print('here2')
             for each (script in scripts) {
                 if (script.name == param.name) {
                     script.temp = data;
                     script.lastEdit = dateFormat.format(new Date());
                     script.committed = false;
-                    return null;
+                    return script;
                 }
             }
         }
@@ -83,7 +103,7 @@ var handlers = [
             for (var i = 0; i < scripts.length; i++) {
                 if (scripts[i].name == param.name) {
                     scripts.splice(i, 1);
-                    return null;
+                    return scripts;
                 }
             }
         }
