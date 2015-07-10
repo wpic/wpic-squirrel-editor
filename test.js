@@ -71,7 +71,6 @@ var handlers = [
         method: 'PUT',
         path: '/rest/scripts/rename/$from/$to',
         handler: function(param) {
-            print('here1')
             for each (script in scripts) {
                 if (script.name == param.from) {
                     script.name = param.to;
@@ -85,7 +84,6 @@ var handlers = [
         path: '/rest/scripts/$name',
         accept: 'text/plain',
         handler: function(param, data) {
-            print('here2')
             for each (script in scripts) {
                 if (script.name == param.name) {
                     script.temp = data;
