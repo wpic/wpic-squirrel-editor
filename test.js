@@ -69,6 +69,20 @@ var handlers = [
     },
     {
         method: 'PUT',
+        path: '/rest/scripts/revert/$name',
+        handler: function(param) {
+            for each (script in scripts) {
+                if (script.name == param.name) {
+                    script.temp = script.content;
+                    script.lastEdit = dateFormat.format(new Date());
+                    script.committed = true;
+                    return script;
+                }
+            }
+        }
+    },
+    {
+        method: 'PUT',
         path: '/rest/scripts/rename/$from/$to',
         handler: function(param) {
             for each (script in scripts) {

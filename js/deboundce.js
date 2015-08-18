@@ -1,40 +1,53 @@
-function debounce(func, wait, immediate) {
-  // 'private' variable for instance
-  // The returned function will be able to reference this due to closure.
-  // Each call to the returned function will share this common timer.
-  var timeout;           
-
-  // Calling debounce returns a new anonymous function
-  return function() {
-    // reference the context and args for the setTimeout function
-    var context = this, 
-    args = arguments;
-
-    // this is the basic debounce behaviour where you can call this 
-    // function several times, but it will only execute once [after
-    // a defined delay]. 
-    // Clear the timeout (does nothing if timeout var is undefined)
-    // so that previous calls within the timer are aborted.
-    clearTimeout(timeout);   
-
-    // Set the new timeout
-    timeout = setTimeout(function() {
-
-       // Inside the timeout function, clear the timeout variable
-       timeout = null;
-
-       // Check if the function already ran with the immediate flag
-       if (!immediate) {
-         // Call the original function with apply
-         // apply lets you define the 'this' object as well as the arguments 
-         //    (both captured before setTimeout)
-         func.apply(context, args);
+/*
+* 频率控制 返回函数连续调用时，fn 执行频率限定为每多少时间执行一次
+* @param fn {function}  需要调用的函数
+* @param delay  {number}    延迟时间，单位毫秒
+* @param immediate  {bool} 给 immediate参数传递false 绑定的函数先执行，而不是delay后后执行。
+* @return {function}实际调用函数
+*/
+var throttle = function (fn,delay, immediate, debounce) {
+   var curr = +new Date(),//当前事件
+       last_call = 0,
+       last_exec = 0,
+       timer = null,
+       diff, //时间差
+       context,//上下文
+       args,
+       exec = function () {
+           last_exec = curr;
+           fn.apply(context, args);
+       };
+   return function () {
+       curr= +new Date();
+       context = this,
+       args = arguments,
+       diff = curr - (debounce ? last_call : last_exec) - delay;
+       clearTimeout(timer);
+       if (debounce) {
+           if (immediate) {
+               timer = setTimeout(exec, delay);
+           } else if (diff >= 0) {
+               exec();
+           }
+       } else {
+           if (diff >= 0) {
+               exec();
+           } else if (immediate) {
+               timer = setTimeout(exec, -diff);
+           }
        }
-    }, wait);
+       last_call = curr;
+   }
+};
 
-    // If immediate flag is passed (and not already in a timeout)
-    //  then call the function without delay
-    if (immediate && !timeout) 
-      func.apply(context, args);  
-   }; 
+/*
+* 空闲控制 返回函数连续调用时，空闲时间必须大于或等于 delay，fn 才会执行
+* @param fn {function}  要调用的函数
+* @param delay   {number}    空闲时间
+* @param immediate  {bool} 给 immediate参数传递false 绑定的函数先执行，而不是delay后后执行。
+* @return {function}实际调用函数
+*/
+
+var debounce = function (fn, delay, immediate) {
+   return throttle(fn, delay, immediate, true);
 };
