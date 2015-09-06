@@ -29,11 +29,16 @@ isMobile = () ->
     return false
 
 # document ready
+# document.body.addEventListener 'touchmove', (event) ->
+#   event.preventDefault();
+#   false
 newfile = 0
 editor = ace.edit("editor")
 language = 'javascript'
 editor.setTheme("ace/theme/twilight")
 editor.getSession().setMode("ace/mode/" + language)
+editor.getSession().on 'changeScrollTop',(scroll) ->
+  editor.getSession().setScrollTop(parseInt(scroll) || 0)
 # $(editor).keypress ->
   # name = $(".filelist li.active").attr("data-name")
   # debounce(saveContent(name,editor.getValue()), 100)
@@ -62,7 +67,7 @@ $ ->
   $('[data-action="create"]').click ->
   # $(".sidecontent .filelist").append ->
     newfile = newfile+1
-    createFile 'untitled' + newfile
+    createFile 'untitled'+newfile+'.js'
   
   getFilelist()
   resize()
@@ -71,14 +76,30 @@ $ ->
     closeSidebar()
 
   if isMobile() is true
-  #   alert('true')
-    $("body").swipe
-      swipeLeft:() ->
-        $(".main").css transform:"translateX(-"+$(".sidebar").width()+"px",transition:"all 1s"
+    $("#editor").click ->
+      # $(".main").css transform:"translateX(-"+$(".sidebar").width()+"px",transition:"all 1s"
+      $(".content").css position:"relative",width:"",left:""
+      $(".sidebar").hide()
+      $(@).attr("data-menu","close")
+    $(".menuctrl").show().click ->
+      status = $(@).attr("data-menu")
+      if status is "open"
+        # $(".main").css transform:"translateX(-"+$(".sidebar").width()+"px",transition:"all 1s"
+        $(".content").css position:"relative",width:"",left:""
         $(".sidebar").hide()
-      swipeRight:() ->
+        $(@).attr("data-menu","close")
+      else
+        w = screen.width * 0.6
         $(".main").css transform:"",transition:"all 1s"
-        $(".sidebar").show().css position:"absolute"
+        $(".sidebar").show().css position:"absolute",width:w+"px"
+        $(".content").css position:"absolute",width:"100%",left:w+"px"
+        $(@).attr("data-menu","open")
+
+    # $("#editor").swipe
+    #   swipeLeft:() ->
+        
+    #   swipeRight:() ->
+        
 
 
 $.fn.editable =  ->
@@ -90,7 +111,6 @@ $.fn.editable =  ->
       changeName(t,($(@).val()).trim())
       $(@).prev().text($(@).val()).removeAttr("style")
       $(@).remove()
-      console.log("Name Changed")
 
 closeSidebar = (e) ->
   console.log(closed)
@@ -122,9 +142,9 @@ changeName = (filename,newname) ->
   $.ajax
     method:'PUT'
     url:'/rest/scripts/rename/'+filename+'/'+newname
-    # data:{from:filename,to:newname},
+    # data:{from:filename,to:newname}
     success: (data) ->
-      # console.log(data)
+      console.log('name changed')
 
 createFile = (filename) ->
   $.ajax
